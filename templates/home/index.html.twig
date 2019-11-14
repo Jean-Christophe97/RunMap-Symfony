@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+{% block nav %}{% endblock %}
+{% block body %}
+<div class="container">
+
+<!-- main -->
+    <h1 class="title text-center">Localise ton futur terrain de jeu !</h1>
+<div class="row">
+    <div class="col-lg-5">
+        <img class="mx-auto" src="assets/image/logo.png" alt="">
+    </div>
+    <div class="col-lg-5">
+        <div class="row">
+            <a class="p__home mx-auto bg-warning text-white font-weight-bold" href="#">Inscription</a>
+        </div>
+        <div class="row">
+            <a  class="p__home__2 mx-auto bg-primary text-white font-weight-bold" href="#">S'inscrire avec Facebook</a>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- icone -->
+    <a href="#jaune" class="icone"><i class="fas fa-arrow-down"></i></a>
+
+<!-- search -->
+<div class="container-fluid">
+<div class="search-main">
+<h6 class="text-warning text-center">C'EST AUSSI SIMPLE QUE ÇA </h2>
+</div>
+</div>
+
+<!-- footer -->
+<div class="footer bg-dark">
+<span id="jaune"></span>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <h6 class=" text-center text-warning">RUNMAP</h6>
+                <p class="text-white text-center">©2019-Runmap</p>
+            </div>
+            <div class="col-lg-3">
+                
+                <ul class="list-nav">
+                <h6 class=" text-center text-warning">MENU</h6>
+                    <li class="text-white text-center"><a href="#">FONCTIONNALITÉS</a></li>
+                    <li class="text-white text-center"><a href="#">À PROPOS</a></li>
+                    <li class="text-white text-center"><a href="#">CONDITIONS</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+            
+                <ul class="list-nav text-center">
+                <h6 class="text-center text-warning">NOUS SUIVRE</h6>
+                    <li class="text-white text-center"><a href="#">FACEBOOK</a></li>
+                    <li class="text-white text-center"><a href="#">TWITTER</a></li>
+                    <li class="text-white text-center"><a href="#">YOUTUBE</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <ul class="list-nav">
+                <h6 class="text-warning text-center">RUNMAP FAMILY</h6>
+                    <li class="text-white text-center"><a href="#">S'INSCRIRE</a></li>
+                    <li class="text-white text-center"><a href="#">AJOUTER UNE VILLE</a></li>
+                    <li class="text-white text-center"><a href="#">AJOUTER UN LIEU</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
