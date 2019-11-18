@@ -39,6 +39,15 @@
     background-attachment: fixed;
 }
 
+.search{
+    display: block;
+    width: 130px;
+    text-align: center;
+    margin:auto;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
 /* footer */
 .footer
 {
