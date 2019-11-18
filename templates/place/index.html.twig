@@ -1,16 +1,70 @@
 {% extends 'base.html.twig' %}
 
+
+
 {% block title %}Recherche des lieux!{% endblock %}
 
 {% block body %}
-<div class="container">
-{% for place in places %}
-<ul>
-<li>{{place.name}}</li>
-<li>{{place.adress}}</li>
-<li>{{place.schedule}}</li>
-<li>{{place.complementinfo}}</li>
-</ul>
-{% endfor %}
-</div>
+
+
+<style>
+    {# geocoder'style #}
+    .geocoder {
+    position:absolute;
+    z-index:1;
+    width:50%;
+    left:50%;
+    margin-left:-47%;
+    top:90px;
+    }
+    .mapboxgl-ctrl-geocoder { min-width:100%; }
+
+    {# map'style #}
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+
+{# mapbox-gl-geocoder #}
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
+<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+
+{# map container #}
+<div id='map'></div>
+<div id='geocoder' class='geocoder'></div>
+
+
+{# map et geocoder script #}
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+        center: [2.23056, 48.98806], // starting position [lng, lat]
+        zoom: 5 // starting zoom
+    });
+
+    var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker:false, // to unset the marker after Geocoder result
+        placeholder:"tappe le nom de ta ville",
+        countries: 'fr',
+    });
+
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+</script>
+
+{# TODO filtrer la recherche sur la France et pour des noms de ville #}
+{# TODO ajouter un écouteur d'évenement pour une ville non referencée si c'est simple à monter ?! #}
+{#  TODO afficher  #}
+{# TODO API GEOCODER POUR RECUPERER LA LONGITUDE ET LA LATITUDE #}
+{# TODO UNE NOUVELLE FENETRE POUR AFFICHER LES DETAILS ET UNE MINIMAP QUI POINTE SUR LE LIEU #}
+
+
+
+
 {% endblock %}
