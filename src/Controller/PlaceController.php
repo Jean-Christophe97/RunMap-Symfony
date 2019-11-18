@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Place;
+use App\Form\PlaceType;
 use App\Repository\PlaceRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -34,4 +36,34 @@ class PlaceController extends AbstractController
             'reviews' => $reviews,
         ]);
     }
+
+    /**
+     * @Route("/create/place", name="new_place")
+     */
+    public function newPlace(Request $request)
+    {
+        $place = new Place();
+
+        $form = $this->createForm(PlaceType::class, $place);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($place);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('home');
+        }
+
+
+
+
+        return $this->render('place/new_place.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
 }
