@@ -17,15 +17,23 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-            <a class="navbar-brand" href="#">Run<b class="text-warning">Map</b></a>
-            <div class="ml-auto">
-                <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-warning my-2 my-sm-0">Connexion</button>
-                </form>
-            </div>
-        </nav>
-            {% block body %}{% endblock %}
-            {% block javascripts %}{% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="{{ path('home') }}">Run<b class="text-warning">Map</b></a>
+     
+        <div class="ml-auto">
+            <form class="form-inline my-2 my-lg-0">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <i class="fas fa-user mr-2"> Bienvenue {{ app.user.firstname }}</i>
+            <a href="{{ path('app_logout') }}" class="btn btn-warning my-2 my-sm-0 font-weight-bold">Deconnexion</a>
+            
+            {% else %}
+                <a href="{{ path('app_login') }}" class="btn btn-warning my-2 my-sm-0 font-weight-bold">Connexion</a>
+            {% endif %}    
+            </form>
+        </div>
+    </nav>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+
     </body>
 </html>
