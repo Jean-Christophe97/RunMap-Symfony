@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -21,6 +22,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "Entrez un email valide",
+     *     checkMX = true
+     * )
+     * )
      */
     private $email;
 
@@ -32,21 +38,40 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 250,
+     *      minMessage = "Votre mot de passe doit comporter {{ limit }} caractères minimum",
+     *      maxMessage = "Votre mot de passe doit comporter {{ limit }} caractères maximum"
+     * )
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 64,
+     *      minMessage = "Votre prénom doit comporter {{ limit }} caractères minimum",
+     *      maxMessage = "Votre prénom doit comporter {{ limit }} caractères maximum"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 64,
+     *      minMessage = "Votre nom doit comporter {{ limit }} caractères minimum",
+     *      maxMessage = "Votre nom doit comporter {{ limit }} caractères maximum"
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
      */
     private $age;
 
