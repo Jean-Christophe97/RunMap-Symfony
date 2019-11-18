@@ -41,15 +41,16 @@ class Review
      */
     private $updated_at;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
-     */
-    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Place", inversedBy="reviews")
      */
     private $place;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -116,18 +117,6 @@ class Review
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getPlace(): ?Place
     {
         return $this->place;
@@ -136,6 +125,18 @@ class Review
     public function setPlace(?Place $place): self
     {
         $this->place = $place;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
