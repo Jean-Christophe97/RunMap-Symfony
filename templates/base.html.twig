@@ -2,24 +2,30 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>RunMap - {% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/style.css">
+
+        {# script js mapbox #}
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+        {# script css mapbox #}
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
+
         <script src="https://kit.fontawesome.com/498d14878f.js" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Run<b class="text-warning">Map</b></a>
+  
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Run<b class="text-warning">Map</b></a>
      
-     <div class="ml-auto">
-        <form class="form-inline my-2 my-lg-0">
-            <button class="btn btn-warning my-2 my-sm-0">Connexion</button>
-        </form>
-    </div>
-     </nav>
-
+        <div class="ml-auto">
+            <form class="form-inline my-2 my-lg-0">
+                <button class="btn btn-warning my-2 my-sm-0">Connexion</button>
+            </form>
+        </div>
+    </nav>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
