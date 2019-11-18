@@ -3,30 +3,14 @@
 {% block title %}Recherche des lieux!{% endblock %}
 
 {% block body %}
-
-{# map's dimensions #}
-<style>
-    body { margin:0; padding:0; }
-    #map { position:absolute; top:0; bottom:0; width:100%; }
-</style>
-{# map container #}
-<div id='map'></div>
-
-{# map script #}
-<script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-        center: [2.23056, 48.98806], // starting position [lng, lat]
-        zoom: 5 // starting zoom
-    });
-</script>
-
-{# TODO AJOUTER LA BARRE DE RECHERCHE #}
-{# TODO API GEOCODER POUR RECUPERER LA LONGITUDE ET LA LATITUDE #}
-
-
-
-
+<div class="container">
+{% for place in places %}
+<ul>
+<li>{{place.name}}</li>
+<li>{{place.adress}}</li>
+<li>{{place.schedule}}</li>
+<li>{{place.complementinfo}}</li>
+</ul>
+{% endfor %}
+</div>
 {% endblock %}

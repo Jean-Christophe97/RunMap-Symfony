@@ -30,7 +30,7 @@ class PlaceController extends AbstractController
         $reviews = $place->getReviews();
         // dump($reviews);
 
-        return $this->render('place/index.html.twig', [
+        return $this->render('place/show.html.twig', [
             'reviews' => $reviews,
         ]);
     }
