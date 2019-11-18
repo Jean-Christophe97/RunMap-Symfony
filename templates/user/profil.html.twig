@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+<div class="container text-center">
+    <h1 class="my-5 text-center">Mon profil</h1>
+<div class="info font-weight-bold">
+    <p>{{ user.firstname }}</p>
+    <hr>
+    <p>{{ user.lastname }}</p>
+    <hr>
+    <p>{{ user.email }}</p>
+    <hr>
+    <p>{{ user.age }}</p>
+    <hr>
+    <p>{{ user.sex }}</p>
+    <hr>
+    <p>{{ user.createdat|date("m/d/Y") }}</p>
+</div>  
+<a href="{{ path('edit_profil') }}" class="btn btn-outline-warning">Modifier</a>  
+</div>
+
+
+{% endblock %}

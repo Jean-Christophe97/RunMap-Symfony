@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserEditType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,11 +34,45 @@ class UserController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('sucess', 'utilisateur crée');
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('app_login');
     }
 
         return $this->render('user/index.html.twig', [
                 'form' => $form->createView()
         ]);
     }
-}
+
+    /**
+     * @Route("/profil", name="user_profil")
+     */
+    public function profil()
+    {
+        $user = $this->getUser();
+
+        return $this->render('user/profil.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/edit/profil", name="edit_profil")
+     */
+    public function edit_profil(Request $request)
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserEditType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_profil');
+        }
+        return $this->render('user/edit_profil.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    }
