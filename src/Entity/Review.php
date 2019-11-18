@@ -27,7 +27,7 @@ class Review
     private $commentary;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $rate;
 
@@ -37,20 +37,14 @@ class Review
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
      */
-    private $updated_at;
-
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Place", inversedBy="reviews")
      */
     private $place;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
-     */
-    private $user;
 
     public function getId(): ?int
     {
@@ -86,7 +80,7 @@ class Review
         return $this->rate;
     }
 
-    public function setRate(?int $rate): self
+    public function setRate(int $rate): self
     {
         $this->rate = $rate;
 
@@ -105,14 +99,14 @@ class Review
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUser(): ?User
     {
-        return $this->updated_at;
+        return $this->user;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUser(?User $user): self
     {
-        $this->updated_at = $updated_at;
+        $this->user = $user;
 
         return $this;
     }
@@ -125,18 +119,6 @@ class Review
     public function setPlace(?Place $place): self
     {
         $this->place = $place;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }

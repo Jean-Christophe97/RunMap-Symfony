@@ -49,6 +49,16 @@ class Place
     private $updated_at;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $longitude;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $latitude;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="place")
      */
     private $reviews;
@@ -59,19 +69,9 @@ class Place
     private $city;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sport", inversedBy="places")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sport", mappedBy="places")
      */
     private $sports;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $longitude;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $latitude;
 
     public function __construct()
     {
@@ -156,6 +156,30 @@ class Place
         return $this;
     }
 
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?float $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?float $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Review[]
      */
@@ -211,6 +235,7 @@ class Place
     {
         if (!$this->sports->contains($sport)) {
             $this->sports[] = $sport;
+            $sport->addPlace($this);
         }
 
         return $this;
@@ -220,31 +245,8 @@ class Place
     {
         if ($this->sports->contains($sport)) {
             $this->sports->removeElement($sport);
+            $sport->removePlace($this);
         }
-
-        return $this;
-    }
-
-    public function getLongitude(): ?float
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(?float $longitude): self
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?float
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(?float $latitude): self
-    {
-        $this->latitude = $latitude;
 
         return $this;
     }

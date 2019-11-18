@@ -29,7 +29,7 @@ class Sport
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Place", mappedBy="sports")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Place", inversedBy="sports")
      */
     private $places;
 
@@ -79,7 +79,6 @@ class Sport
     {
         if (!$this->places->contains($place)) {
             $this->places[] = $place;
-            $place->addSport($this);
         }
 
         return $this;
@@ -89,7 +88,6 @@ class Sport
     {
         if ($this->places->contains($place)) {
             $this->places->removeElement($place);
-            $place->removeSport($this);
         }
 
         return $this;

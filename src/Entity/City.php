@@ -41,6 +41,7 @@ class City
     public function __construct()
     {
         $this->places = new ArrayCollection();
+        $this->created_At = new \DateTime();
     }
 
     public function getId(): ?int
