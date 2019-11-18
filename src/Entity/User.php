@@ -73,6 +73,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int

@@ -13,7 +13,7 @@
     </div>
     <div class="col-lg-5">
         <div class="row">
-            <a class="p__home mx-auto bg-warning text-white font-weight-bold" href="#">Inscription</a>
+            <a class="p__home mx-auto bg-warning text-white font-weight-bold" href={{ path('register') }}>Inscription</a>
         </div>
         <div class="row">
             <a  class="p__home__2 mx-auto bg-primary text-white font-weight-bold" href="#">S'inscrire avec Facebook</a>
@@ -29,6 +29,10 @@
 <div class="container-fluid">
 <div class="search-main">
 <h6 class="text-warning text-center">C'EST AUSSI SIMPLE QUE ÇA </h2>
+      <form class="form-inline my-5" style="width: 400px; margin:auto;">
+      <input class="form-control mr-2" type="search" placeholder="Ville" aria-label="Search">
+      <button class="btn btn-outline-warning" type="submit">Recherchez</button>
+    </form>
 </div>
 </div>
 
