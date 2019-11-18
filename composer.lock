@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae6aa0c37716d64d4d4fd6683aeac873",
+    "content-hash": "af6a7dc3d38eb4a9c95789a13e2f4d2d",
     "packages": [
         {
             "name": "doctrine/annotations",
