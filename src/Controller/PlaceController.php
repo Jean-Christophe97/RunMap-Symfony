@@ -17,7 +17,9 @@ class PlaceController extends AbstractController
     public function allPlaces(PlaceRepository $repository)
     {
         $places = $repository->findAll();
-        dump($places);
+
+        // dd($places);
+
 
         return $this->render('place/index.html.twig', [
             'places' => $places,
@@ -31,10 +33,11 @@ class PlaceController extends AbstractController
     // https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
     {
         $reviews = $place->getReviews();
-        // dump($reviews);
+        // dd($reviews);
 
         return $this->render('place/show.html.twig', [
             'reviews' => $reviews,
+            'place' => $place
         ]);
     }
 
