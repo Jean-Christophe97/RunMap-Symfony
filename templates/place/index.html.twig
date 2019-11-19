@@ -43,9 +43,15 @@
             cursor: pointer;
             border: 1px solid white;
             border-radius: 50%;
+
+        }
+
+        {# popup #}
+        .popup-place-name {
+            font-weight: bold;
         }
     </style>
-
+    
     {# mapbox-gl-geocoder #}
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
@@ -59,7 +65,7 @@
     <div id='geocoder' class='geocoder'></div>
 
 
-    {# map et geocoder script #}
+    {# map & geocoder script #}
     <script>
         // TODO: il faudra faire comme avec le .env.local :  ne pas laisser le token sur github.
         mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
@@ -77,30 +83,18 @@
                     marker:false, // to unset the marker after Geocoder result
                     placeholder:"tappe le nom de ta ville",
                     countries: 'fr',
+                    types: 'place',
                 });
 
                 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));        
 
-        
-        const allPlaces = [
-            {   id:1,
-                adress:"2 allée des frêres lumière",
-                city: "Villeneuve-La-Garenne",
-            },
-            {
-                id:2,
-                adress:"2 allée hector berlioz",
-                city: "Franconville"
-            }
-        ];
-
         var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-
-        allPlaces.forEach(place => {
-
+        
+        // loop to create a marker and a popup for each place
+        {% for place in places %}
         // request to have the latitude and longitude of a place
         mapboxClient.geocoding.forwardGeocode({
-            query: `${place.adress},${place.city}`,
+            query: '{{place.adress}},{{place.city.name}}',
             autocomplete: false,
             limit: 1
         })
@@ -108,11 +102,12 @@
         .then(function (response) {
             if (response && response.body && response.body.features && response.body.features.length)
             {
+                // get the longitude and latitude
                 var feature = response.body.features[0];
 
                 // create the popup
                 var popup = new mapboxgl.Popup({ offset: 10 }) // offset === margin-bottom
-                    .setHTML(`${place.adress},${place.city} <a href="/place/${place.id}">plus de details</a>`);
+                    .setHTML('<div class="popup-place-name">{{place.name}}</div><div>{{place.city.name}}</div><div><a href="{{ path('place', {id: place.id}) }}">plus de details</a></div>');
 
                 // create DOM element for the marker
                 var el = document.createElement('div');
@@ -125,11 +120,6 @@
                     .setPopup(popup);
             }
         });
-        });
-
+        {% endfor %}
     </script>
-
-    {# TODO UNE NOUVELLE FENETRE POUR AFFICHER LES DETAILS ET UNE MINIMAP QUI POINTE SUR LE LIEU #}
-    {# TODO filtrer la recherche pour des noms de ville #}
-    {# TODO ajouter un écouteur d'évenement pour une ville non referencée si c'est simple à monter ?! #}
 {% endblock %}
