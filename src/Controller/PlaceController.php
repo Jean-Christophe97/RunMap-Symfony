@@ -17,7 +17,8 @@ class PlaceController extends AbstractController
     public function allPlaces(PlaceRepository $repository)
     {
         $places = $repository->findAll();
-        // dump($places);
+        // dd($places);
+        
 
         return $this->render('place/index.html.twig', [
             'places' => $places,
@@ -34,6 +35,7 @@ class PlaceController extends AbstractController
 
         return $this->render('place/show.html.twig', [
             'reviews' => $reviews,
+            'place' => $place
         ]);
     }
 
