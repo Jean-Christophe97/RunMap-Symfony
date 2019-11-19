@@ -41,6 +41,8 @@
             width: 17px;
             height: 17px;
             cursor: pointer;
+            border: 1px solid white;
+            border-radius: 50%;
         }
     </style>
 
@@ -59,11 +61,46 @@
 
     {# map et geocoder script #}
     <script>
-        
+        // TODO: il faudra faire comme avec le .env.local :  ne pas laisser le token sur github.
         mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
+        
+        var map = new mapboxgl.Map({
+                    container: 'map', // container id
+                    style: 'mapbox://styles/mapbox/outdoors-v10', // stylesheet location
+                    center: [2.23056, 48.98806], // starting position [lng, lat]
+                    zoom: 5 // starting zoom
+                });
+
+        var geocoder = new MapboxGeocoder({
+                    accessToken: mapboxgl.accessToken,
+                    mapboxgl: mapboxgl,
+                    marker:false, // to unset the marker after Geocoder result
+                    placeholder:"tappe le nom de ta ville",
+                    countries: 'fr',
+                });
+
+                document.getElementById('geocoder').appendChild(geocoder.onAdd(map));        
+
+        
+        const allPlaces = [
+            {   id:1,
+                adress:"2 allée des frêres lumière",
+                city: "Villeneuve-La-Garenne",
+            },
+            {
+                id:2,
+                adress:"2 allée hector berlioz",
+                city: "Franconville"
+            }
+        ];
+
         var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+
+        allPlaces.forEach(place => {
+
+        // request to have the latitude and longitude of a place
         mapboxClient.geocoding.forwardGeocode({
-            query: '2 allée des frêres lumière, Villeneuve-La-Garenne ',
+            query: `${place.adress},${place.city}`,
             autocomplete: false,
             limit: 1
         })
@@ -73,26 +110,9 @@
             {
                 var feature = response.body.features[0];
 
-                var map = new mapboxgl.Map({
-                    container: 'map', // container id
-                    style: 'mapbox://styles/mapbox/outdoors-v10', // stylesheet location
-                    center: [2.23056, 48.98806], // starting position [lng, lat]
-                    zoom: 5 // starting zoom
-                });
-
-                var geocoder = new MapboxGeocoder({
-                    accessToken: mapboxgl.accessToken,
-                    mapboxgl: mapboxgl,
-                    marker:false, // to unset the marker after Geocoder result
-                    placeholder:"tappe le nom de ta ville",
-                    countries: 'fr',
-                });
-
-                document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-
                 // create the popup
                 var popup = new mapboxgl.Popup({ offset: 10 }) // offset === margin-bottom
-                    .setHTML('2 allée des frêres lumière, Villeneuve-La-Garenne <a href="#">plus de details</a>');
+                    .setHTML(`${place.adress},${place.city} <a href="/place/${place.id}">plus de details</a>`);
 
                 // create DOM element for the marker
                 var el = document.createElement('div');
@@ -105,11 +125,11 @@
                     .setPopup(popup);
             }
         });
+        });
+
     </script>
 
-    {# cf trello geocoderForward pour placer un marker à partir du nom de la place #}
     {# TODO UNE NOUVELLE FENETRE POUR AFFICHER LES DETAILS ET UNE MINIMAP QUI POINTE SUR LE LIEU #}
     {# TODO filtrer la recherche pour des noms de ville #}
     {# TODO ajouter un écouteur d'évenement pour une ville non referencée si c'est simple à monter ?! #}
-    {#  TODO afficher  #}
 {% endblock %}
