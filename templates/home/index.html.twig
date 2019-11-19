@@ -35,12 +35,27 @@
 <!-- search -->
 <div class="container-fluid">
 <div class="search-main">
-<h6 class="text-warning text-center pt-4">C'EST AUSSI SIMPLE QUE ÇA </h2>
-      {# <form class="form-inline my-5" style="width: 400px; margin:auto;">
-      <input class="form-control mr-2" type="search" placeholder="Ville" aria-label="Search"> #}
-      {# <button class="btn btn-warning mt-1" type="submit">Rechercher</button> #}
+    <h6 class="text-warning text-center pt-4">C'EST AUSSI SIMPLE QUE ÇA </h6>
       <a href="{{ path('allPlaces') }}" class="search btn btn-warning">RECHERCHER</a>
-    {# </form> #}
+<div class="container"> 
+    <h3 class="text-center text-white last-place">Derniers Lieux ajoutés</h3>
+    <div class="row mt-2">
+    {% for place in places %}
+      <div class="col-lg-4">
+            <div class="card" style="width: 18rem;">
+            <img src="assets/image/card2.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title text-center">{{ place.name }}</h5>
+                <p class="card-text">Adresse: {{ place.adress }}</p>
+            </div>
+            <div class="card-body text-center">
+                <a href="{{ path('place', {'id':place.id}) }}" class="btn btn-warning font-weight-bold">Détails</a>
+            </div>
+            </div>
+      </div>
+      {% endfor %}
+      </div>
+</div>           
 </div>
 </div>
 
