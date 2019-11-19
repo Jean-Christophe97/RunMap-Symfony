@@ -39,10 +39,10 @@
       <a href="{{ path('allPlaces') }}" class="search btn btn-warning">RECHERCHER</a>
 <div class="container"> 
     <h3 class="text-center text-white last-place">Derniers Lieux ajoutés</h3>
-    <div class="row mt-2">
+    {# <div class="row mt-2"> #}
     {% for place in places %}
-      <div class="col-lg-4">
-            <div class="card" style="width: 18rem;">
+      <div class="col-lg-4 mx-auto">
+            <div class="card mx-auto my-2" style="width: 18rem;">
             <img src="assets/image/card2.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title text-center">{{ place.name }}</h5>
@@ -54,7 +54,7 @@
             </div>
       </div>
       {% endfor %}
-      </div>
+      {# </div> #}
 </div>           
 </div>
 </div>
@@ -72,7 +72,7 @@
                 
                 <ul class="list-nav">
                 <h6 class=" text-center text-warning">MENU</h6>
-                    <li class="text-white text-center"><a href="#">FONCTIONNALITÉS</a></li>
+                    <li class="text-white text-center "><a href="#">FONCTIONNALITÉS</a></li>
                     <li class="text-white text-center"><a href="#">À PROPOS</a></li>
                     <li class="text-white text-center"><a href="#">CONDITIONS</a></li>
                 </ul>
@@ -91,7 +91,7 @@
                 <h6 class="text-warning text-center">RUNMAP FAMILY</h6>
                     <li class="text-white text-center"><a href="#">S'INSCRIRE</a></li>
                     <li class="text-white text-center"><a href="#">AJOUTER UNE VILLE</a></li>
-                    <li class="text-white text-center"><a href="#">AJOUTER UN LIEU</a></li>
+                    <li class="text-white text-center"><a href="{{ path('new_place') }}">AJOUTER UN LIEU</a></li>
                 </ul>
             </div>
         </div>
