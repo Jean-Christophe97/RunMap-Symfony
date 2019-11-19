@@ -31,7 +31,7 @@ class PlaceController extends AbstractController
     public function showPlace(Place $place) // https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
     {
         $reviews = $place->getReviews();
-        // dump($reviews);
+        // dd($reviews);
 
         return $this->render('place/show.html.twig', [
             'reviews' => $reviews,
