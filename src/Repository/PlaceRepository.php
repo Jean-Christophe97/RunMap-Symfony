@@ -6,6 +6,7 @@ use App\Entity\Place;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
+
 /**
  * @method Place|null find($id, $lockMode = null, $lockVersion = null)
  * @method Place|null findOneBy(array $criteria, array $orderBy = null)
@@ -19,11 +20,23 @@ class PlaceRepository extends ServiceEntityRepository
         parent::__construct($registry, Place::class);
     }
 
+    // retourne la liste des places filtré par notes
+    public function findPlaceByDate()
+    {
+        $qb = $this->createQueryBuilder('p')
+        ->orderBy('p.created_at', 'DESC')
+        ->setMaxResults(3);
+
+    $query = $qb->getQuery();
+
+    return $query->execute();
+    }
+
     // /**
     //  * @return Place[] Returns an array of Place objects
     //  */
     /*
-    public function findByExampleField($value)
+    public function findPlaceByRate($rate)
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
@@ -47,4 +60,6 @@ class PlaceRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
 }
