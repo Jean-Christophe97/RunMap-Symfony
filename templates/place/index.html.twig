@@ -1,70 +1,135 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block title %}Recherche des lieux!{% endblock %}
 
+{% block mapboxscripts %}
+    {# script js mapbox #}
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+    {# script css mapbox #}
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
+
 {% block body %}
+    <style>
+        body { margin:0; padding:0; }
+        
+        {# geocoder #}
+        .geocoder {
+            position:absolute;
+            z-index:1;
+            width:50%;
+            left:50%;
+            margin-left:-47%;
+            top:90px;
+        }
+        .mapboxgl-ctrl-geocoder { min-width:100%; }
+
+        {# map #}
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+
+        {# popup #}
+        .mapboxgl-popup {
+            max-width: 200px;
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+
+        {# marker #}
+        #marker {
+            background-image: url('/assets/image/yellow-marker.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            border: 1px solid white;
+            border-radius: 50%;
+        }
+    </style>
+
+    {# mapbox-gl-geocoder #}
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
+    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+
+    {# map & geocoder containers #}
+    <div id='map'></div>
+    <div id='geocoder' class='geocoder'></div>
 
 
-<style>
-    {# geocoder'style #}
-    .geocoder {
-    position:absolute;
-    z-index:1;
-    width:50%;
-    left:50%;
-    margin-left:-47%;
-    top:90px;
-    }
-    .mapboxgl-ctrl-geocoder { min-width:100%; }
+    {# map et geocoder script #}
+    <script>
+        // TODO: il faudra faire comme avec le .env.local :  ne pas laisser le token sur github.
+        mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
+        
+        var map = new mapboxgl.Map({
+                    container: 'map', // container id
+                    style: 'mapbox://styles/mapbox/outdoors-v10', // stylesheet location
+                    center: [2.23056, 48.98806], // starting position [lng, lat]
+                    zoom: 5 // starting zoom
+                });
 
-    {# map'style #}
-    body { margin:0; padding:0; }
-    #map { position:absolute; top:0; bottom:0; width:100%; }
-</style>
+        var geocoder = new MapboxGeocoder({
+                    accessToken: mapboxgl.accessToken,
+                    mapboxgl: mapboxgl,
+                    marker:false, // to unset the marker after Geocoder result
+                    placeholder:"tappe le nom de ta ville",
+                    countries: 'fr',
+                });
 
-{# mapbox-gl-geocoder #}
-<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
-<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
-<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+                document.getElementById('geocoder').appendChild(geocoder.onAdd(map));        
 
+        
+        const allPlaces = [
+            {   id:1,
+                adress:"2 allée des frêres lumière",
+                city: "Villeneuve-La-Garenne",
+            },
+            {
+                id:2,
+                adress:"2 allée hector berlioz",
+                city: "Franconville"
+            }
+        ];
 
-{# map container #}
-<div id='map'></div>
-<div id='geocoder' class='geocoder'></div>
+        var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
 
+        allPlaces.forEach(place => {
 
-{# map et geocoder script #}
-<script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-        center: [2.23056, 48.98806], // starting position [lng, lat]
-        zoom: 5 // starting zoom
-    });
+        // request to have the latitude and longitude of a place
+        mapboxClient.geocoding.forwardGeocode({
+            query: `${place.adress},${place.city}`,
+            autocomplete: false,
+            limit: 1
+        })
+        .send()
+        .then(function (response) {
+            if (response && response.body && response.body.features && response.body.features.length)
+            {
+                var feature = response.body.features[0];
 
-    var geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl,
-        marker:false, // to unset the marker after Geocoder result
-        placeholder:"tappe le nom de ta ville",
-        countries: 'fr',
-    });
+                // create the popup
+                var popup = new mapboxgl.Popup({ offset: 10 }) // offset === margin-bottom
+                    .setHTML(`${place.adress},${place.city} <a href="/place/${place.id}">plus de details</a>`);
 
-    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-</script>
+                // create DOM element for the marker
+                var el = document.createElement('div');
+                el.id = 'marker';
 
-{# TODO filtrer la recherche sur la France et pour des noms de ville #}
-{# TODO ajouter un écouteur d'évenement pour une ville non referencée si c'est simple à monter ?! #}
-{#  TODO afficher  #}
-{# TODO API GEOCODER POUR RECUPERER LA LONGITUDE ET LA LATITUDE #}
-{# TODO UNE NOUVELLE FENETRE POUR AFFICHER LES DETAILS ET UNE MINIMAP QUI POINTE SUR LE LIEU #}
+                // create the marker
+                new mapboxgl.Marker(el)
+                    .setLngLat(feature.center)
+                    .addTo(map)
+                    .setPopup(popup);
+            }
+        });
+        });
 
+    </script>
 
-
-
+    {# TODO UNE NOUVELLE FENETRE POUR AFFICHER LES DETAILS ET UNE MINIMAP QUI POINTE SUR LE LIEU #}
+    {# TODO filtrer la recherche pour des noms de ville #}
+    {# TODO ajouter un écouteur d'évenement pour une ville non referencée si c'est simple à monter ?! #}
 {% endblock %}
