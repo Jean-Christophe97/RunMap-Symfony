@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Place;
+use App\Entity\Review;
 use App\Form\PlaceType;
+use App\Form\ReviewType;
 use App\Form\PlaceEditType;
 use App\Repository\PlaceRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,15 +32,42 @@ class PlaceController extends AbstractController
     /**
      * @Route("/place/{id}", name="place")
      */
-    public function showPlace(Place $place) 
+    public function showPlace(Place $place, Request $request) 
     // https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
     {
         $reviews = $place->getReviews();
         // dd($reviews);
 
+
+        $review = new Review();
+
+        $user = $this->getUser();
+
+
+        $form = $this->createForm(ReviewType::class, $review);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            $review->setUser($user);
+            $review->setPlace($place);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($review);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('place', ['id' => $place->getId()]);
+        }
+
+
+
+
         return $this->render('place/show.html.twig', [
             'reviews' => $reviews,
-            'place' => $place
+            'place' => $place,
+            'form' => $form->createView()
         ]);
     }
 
