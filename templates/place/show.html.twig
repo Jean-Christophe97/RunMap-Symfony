@@ -93,7 +93,9 @@
 
 	<div class="container-fluid">
 		<h1 class="text-center text-warning my-3">{{ place.name }}</h1>
+		{% if is_granted('ROLE_ADMIN') %}
 		<a class="btn btn-danger  ml-4" href="{{ path('delete_place', {id: place.id}) }}">Supprimer</a>
+		{% endif %}
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="info-place">
@@ -149,7 +151,10 @@
 							</div>
 
 							<div class="col-lg-2">
-								<a href="{{ path('delete_review',{'id':review.id}) }}" class="btn btn-danger">Supprimer</a>
+								{% if is_granted('ROLE_ADMIN') %}
+									<a href="{{ path('delete_review',{'id':review.id}) }}" class="btn btn-danger">Supprimer</a>
+								{% endif %}
+ 
 							</div>
 
 						</div>
