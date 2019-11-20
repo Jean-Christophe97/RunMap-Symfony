@@ -13,7 +13,9 @@
         {% endblock %}
     </head>
     <body>
+    {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    {% endblock %}
         <a class="navbar-brand" href="{{ path('home') }}">Run<b class="text-warning">Map</b></a>
      
         <div class="ml-auto">
@@ -28,6 +30,14 @@
             </form>
         </div>
     </nav>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                        {{ message }}
+            </div>   
+        {% endfor %}                
+    {% endfor %}
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
 

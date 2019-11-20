@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center text-warning">Utilisateurs</h1>
+    
+        <table class="table text-center">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Email</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Genre</th>
+              <th scope="col">Age</th>
+              <th scope="col">Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.email}}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.sex }}</td>
+                <td>{{ user.age }}</td>
+                <td><a class="text-dark" href="{{ path('delete_user', {'id': user.id}) }}"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+                {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    
+</div>
+{% endblock %}

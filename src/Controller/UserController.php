@@ -18,9 +18,7 @@ class UserController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
-
         
-
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -33,7 +31,7 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $this->addFlash('sucess', 'utilisateur crée');
+        $this->addFlash('success', 'utilisateur crée');
         return $this->redirectToRoute('app_login');
     }
 
@@ -68,6 +66,7 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
+            $this->addFlash('warning', 'utilisateur modifié');
             return $this->redirectToRoute('user_profil');
         }
         return $this->render('user/edit_profil.html.twig', [

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,16 +19,34 @@ class Review
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "Votre titre doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Votre titre doit avoir au maximum {{ limit }} caractères"
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 400,
+     *      minMessage = "Votre commentaire doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Votre commentaire doit avoir au maximum {{ limit }} caractères"
+     * )
      */
     private $commentary;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\Range(
+     *      min = 1,
+     *      max = 5,
+     *      minMessage = "Votre note doit être entre 1 et 5",
+     *      maxMessage = "Votre note doit être entre 1 et 5"
+     * )
      */
     private $rate;
 
@@ -45,6 +64,11 @@ class Review
      * @ORM\ManyToOne(targetEntity="App\Entity\Place", inversedBy="reviews")
      */
     private $place;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+    }
 
     public function getId(): ?int
     {
