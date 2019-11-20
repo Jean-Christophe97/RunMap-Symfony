@@ -20,11 +20,6 @@ class ReviewType extends AbstractType
             ->add('title', TextType::class)
             ->add('commentary', TextareaType::class)
             ->add('rate', NumberType::class)
-            // ->add('user')
-            ->add('place', EntityType::class, [
-                // looks for choices from this entity
-                'class' => Place::class
-                ]);
         ;
     }
 
