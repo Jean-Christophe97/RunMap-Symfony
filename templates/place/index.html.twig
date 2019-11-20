@@ -17,16 +17,17 @@
     <style>
         body { margin:0; padding:0; }
         
-        {# geocoder #}
-        .geocoder {
+        {# geocoder input #}
+        .mapboxgl-ctrl-geocoder { min-width:100%; }
+
+        #map-overlay {
             position:absolute;
             z-index:1;
-            width:50%;
+            width:60%;
             left:50%;
             margin-left:-47%;
-            top:90px;
+            top:130px;
         }
-        .mapboxgl-ctrl-geocoder { min-width:100%; }
 
         {# map #}
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -54,6 +55,7 @@
         .popup-place-name {
             font-weight: bold;
         }
+
     </style>
     
     {# mapbox-gl-geocoder #}
@@ -66,7 +68,12 @@
 
     {# map & geocoder containers #}
     <div id='map'></div>
-    <div id='geocoder' class='geocoder'></div>
+    <div id="map-overlay">
+        <div id='geocoder' class='geocoder input-group'>
+            <a href="{{ path('new_place') }}" class="btn btn-warning">Ajoute un lieu</a>
+        </div>
+    </div>
+    
 
 
     {# map & geocoder script #}
@@ -85,7 +92,7 @@
                     accessToken: mapboxgl.accessToken,
                     mapboxgl: mapboxgl,
                     marker:false, // to unset the marker after Geocoder result
-                    placeholder:"tappe le nom de ta ville",
+                    placeholder:"recherche...",
                     countries: 'fr',
                     types: 'place',
                 });
