@@ -114,6 +114,8 @@
 					{% endfor %}
 				</div>
 
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							
 				<h1 class="text-center my-5">Ajouter un avis</h1>
 				<div class="add-review mx-auto" style="width: 25rem;">
 					{{form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
@@ -121,7 +123,7 @@
 					<button class="btn btn-warning mb-3">Crée</button>
 					{{ form_end(form) }}
 				</div>
-
+			{% endif %}
 			</div>
 
 			<div class="col-lg-5 mx-auto" style="height: 40rem;">

@@ -58,6 +58,7 @@ class PlaceController extends AbstractController
             $entityManager->persist($review);
             $entityManager->flush();
             
+            $this->addFlash('success', 'Avis ajouté');
             return $this->redirectToRoute('place', ['id' => $place->getId()]);
         }
 
@@ -111,7 +112,8 @@ class PlaceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
-            return $this->redirectToRoute('allPlaces');
+            $this->addFlash('warning', 'lieu modifié');
+            return $this->redirectToRoute('place', ['id' => $place->getId()]);
         }
         return $this->render('place/edit.html.twig', [
             'form' => $form->createView(),
