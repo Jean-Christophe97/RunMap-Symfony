@@ -30,9 +30,9 @@ class PlaceType extends AbstractType
             // ->add('created_at')
             // ->add('longitude')
             // ->add('latitude')
-            ->add('city', TextType::class,[
-                'label'  => 'Ville',
-            ])
+            // ->add('city', TextType::class,[
+            //     'label'  => 'Ville',
+            // ])
             // ->add('sports')
         ;
     }

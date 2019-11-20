@@ -41,7 +41,7 @@ class City
     public function __construct()
     {
         $this->places = new ArrayCollection();
-        $this->created_At = new \DateTime();
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int
@@ -54,7 +54,7 @@ class City
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -66,7 +66,7 @@ class City
         return $this->postalcode;
     }
 
-    public function setPostalcode(int $postalcode): self
+    public function setPostalcode(?int $postalcode): self
     {
         $this->postalcode = $postalcode;
 
