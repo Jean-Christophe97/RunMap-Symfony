@@ -87,8 +87,11 @@ class PlaceController extends AbstractController
         return $this->render('place/edit.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
 
-     * @Route("/delete/place/{id}", name="delete_place")
+    
+     /**
+      * @Route("/delete/place/{id}", name="delete_place")
      */
     public function deletePlace($id)
     {
