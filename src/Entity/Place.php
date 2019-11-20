@@ -72,7 +72,7 @@ class Place
     private $latitude;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="place")
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="place", cascade={"remove"})
      */
     private $reviews;
 
