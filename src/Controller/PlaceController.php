@@ -63,8 +63,6 @@ class PlaceController extends AbstractController
         //dump($city);
         $cityNameBdd = $cityRepository->findOneByName($city);
         //dd($cityNameBdd);
-        $cityId= [];
-        //dd($cityId);
 
         if ($cityNameBdd === null){
 
@@ -85,11 +83,10 @@ class PlaceController extends AbstractController
                     $manager->persist($newCity);
                     $manager->flush();
                     //dd($newCity);
-                    $cityId = [$newCity];
-                    }
+                }
+                    $cityId = $newCity;
                 } else {
-                    $cityId = [$cityNameBdd];
-                    //dd($cityId);
+                    $cityId = $cityNameBdd;
                 }
 
         $placeName = $formPlace["name"]->getData();
@@ -106,7 +103,7 @@ class PlaceController extends AbstractController
         $place->setSchedule($placeSchedule);
         $place->setComplementinfo($placeComplementInfo);
         //dd($cityId);
-        $place->setCity($cityNameBdd);
+        $place->setCity($cityId);
         //dd($place);
 
         if ($formPlace->isSubmitted() && $formPlace->isValid()){
