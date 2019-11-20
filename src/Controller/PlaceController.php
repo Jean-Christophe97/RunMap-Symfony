@@ -10,7 +10,6 @@ use App\Form\PlaceType;
 use App\Repository\CityRepository;
 
 use App\Entity\Review;
-use App\Form\PlaceType;
 use App\Form\ReviewType;
 use App\Form\PlaceEditType;
 
