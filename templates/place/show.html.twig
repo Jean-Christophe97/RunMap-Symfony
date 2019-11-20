@@ -1,12 +1,43 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block title %}Recherche des lieux!{% endblock %}
 
+{% block mapboxscripts %}
+    {# script js mapbox #}
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+    {# script css mapbox #}
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
+
 {% block body %}
+    <style>
+        body { margin:0; padding:0; }
+        {# map #}
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        {# marker #}
+        #marker {
+            background-image: url('/assets/image/yellow-marker.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            border: 1px solid white;
+            border-radius: 50%;
+        }
+    </style>
+    
+    {# mapbox-gl-geocoder #}
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
+    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+    
     <div class="container-fluid">
         <h1 class="text-center text-warning my-3">{{ place.name }}</h1>
+        <a class="btn btn-warning" href="{{ path('delete_place', {id: place.id}) }}">Supprimer</a>
         <div class="row">
         <div class="col-lg-6">
             <div class="info-place">
@@ -54,13 +85,42 @@
             </div>   
         </div>
 
-        <div class="col-lg-6">
-            <div class="map">
-            <p>La map ici</p>
+        <div class="col-lg-4">
+            <div id="map">
+            
             </div>
         </div> 
         </div>
     </div>
 
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
+    var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+    mapboxClient.geocoding.forwardGeocode({
+        query: '{{place.adress}},{{place.city.name}}',
+        autocomplete: false,
+        limit: 1
+    })
+    .send()
+    .then(function (response) {
+        if (response && response.body && response.body.features && response.body.features.length) {
+            var feature = response.body.features[0];
+
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: feature.center,
+                zoom: 12
+            });
+            var el = document.createElement('div');
+                el.id = 'marker';
+
+            new mapboxgl.Marker(el)
+                .setLngLat(feature.center)
+                .addTo(map);
+        }
+    });
+    
+</script>
 
 {% endblock %}
