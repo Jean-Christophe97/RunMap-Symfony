@@ -1,126 +1,149 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recherche des lieux!{% endblock %}
+{% block title %}Recherche des lieux!
+{% endblock %}
 
 {% block mapboxscripts %}
-    {# script js mapbox #}
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
-    {# script css mapbox #}
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
+	{# script js mapbox #}
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+	{# script css mapbox #}
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet'/>
 {% endblock %}
 
 {% block body %}
-    <style>
-        body { margin:0; padding:0; }
-        {# map #}
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-        {# marker #}
-        #marker {
-            background-image: url('/assets/image/yellow-marker.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            width: 17px;
-            height: 17px;
-            cursor: pointer;
-            border: 1px solid white;
-            border-radius: 50%;
-        }
-    </style>
-    
-    {# mapbox-gl-geocoder #}
-    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
-    <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
-    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
-    
-    <div class="container-fluid">
-        <h1 class="text-center text-warning my-3">{{ place.name }}</h1>
-        <a class="btn btn-danger" href="{{ path('delete_place', {id: place.id}) }}">Supprimer</a>
-        <div class="row">
-        <div class="col-lg-6">
-            <div class="info-place">
-                <div class="card" style="width: 30rem;">
-                    {# <img class="card-img-top" src="/assets/image/card2.jpg" alt="Card image cap"> #}
-                    <div class="card-body">
-                        <h5 class="card-title">{{place.name }}</h5>
-                        {# <p class="card-text">{{ place.complementinfo }}</p> #}
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Adresse</strong> : {{place.adress }}</li>
-                        <li class="list-group-item"><strong>Horraire</strong> : {{place.schedule}}</li>
-                        <li class="list-group-item"><strong>Informations</strong> : {{ place.complementinfo }}</li>
-                        <li class="list-group-item">{{ place.createdat|date('d-m-Y') }}</li>
-                    </ul>
-                    <div class="card-body">
-                        <a href="#" class="card-link btn ">Voir les Avis</a>
-                        <a href="{{ path('edit_place', {'id':place.id}) }}" class="btn btn-warning ml-3">Modifier</a>
-                    </div>
-                </div>
-            </div>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		{
+			# map #
+		}
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+		}
+		{
+			# marker #
+		}
+		#marker {
+			background-image: url('/assets/image/yellow-marker.png');
+			background-size: contain;
+			background-repeat: no-repeat;
+			width: 17px;
+			height: 17px;
+			cursor: pointer;
+			border: 1px solid white;
+			border-radius: 50%;
+		}
+	</style>
 
-            <!-- Avis caché  -->
-            <div class="reviews">
-                {% for review in place.reviews %}
-                <hr>
-                <div class="row">
-                    <div class="col-lg-3">
-                        <h6 class="">{{ review.user.firstname }} {{ review.user.lastname }} le : {{ review.createdat|date('d-m-Y') }} </h6>
-                        <img src="/assets/image/card2.jpg" alt="" class="rounded-circle" style="width: 9rem; height:9rem;">
-                    </div>
+	{# mapbox-gl-geocoder #}
+	<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+	<link
+	rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css'/>
+	<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+	<script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
 
-                    <div class="col-lg-7">
-                    <p class="lead">{{ review.rate }}/5</p>
-                    <p class="lead">{{review.title}}</p>
-                    <p class="lead">{{ review.commentary }}</p>
-                    </div>
+	<div class="container-fluid">
+		<h1 class="text-center text-warning my-3">{{ place.name }}</h1>
+		<a class="btn btn-danger  ml-4" href="{{ path('delete_place', {id: place.id}) }}">Supprimer</a>
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="info-place">
+					<div
+						class="card mx-auto" style="width: 25rem;">
+						{# <img class="card-img-top" src="/assets/image/card2.jpg" alt="Card image cap"> #}
+						<div class="card-body">
+							<h5 class="card-title">{{place.name }}</h5>
+							{# <p class="card-text">{{ place.complementinfo }}</p> #}
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								<strong>Adresse</strong>
+								:
+								{{place.adress }}</li>
+							<li class="list-group-item">
+								<strong>Horraire</strong>
+								:
+								{{place.schedule}}</li>
+							<li class="list-group-item">
+								<strong>Informations</strong>
+								:
+								{{ place.complementinfo }}</li>
+							<li class="list-group-item">{{ place.createdat|date('d-m-Y') }}</li>
+						</ul>
+						<div class="card-body">
+							<a href="#" class="card-link btn ">Voir les Avis</a>
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<a href="{{ path('edit_place', {'id':place.id}) }}" class="btn btn-warning ml-3">Modifier</a>
+							{% endif %}
+						</div>
+					</div>
+				</div>
 
-                    <div class="col-lg-2">
-                        <a href="{{ path('delete_review',{'id':review.id}) }}" class="btn btn-danger">Supprimer</a>
-                    </div>
+				<!-- Avis caché  -->
+				<div class="reviews">
+					{% for review in place.reviews %}
+						<hr>
+						<div class="row">
+							<div class="col-lg-3">
+								<h6 class="">{{ review.user.firstname }}
+									{{ review.user.lastname }}
+									le :
+									{{ review.createdat|date('d-m-Y') }}
+								</h6>
+								<img src="/assets/image/card2.jpg" alt="" class="rounded-circle" style="width: 9rem; height:9rem;">
+							</div>
 
-                </div>    
-                {% endfor %}
-            </div>   
-        </div>
+							<div class="col-lg-7">
+								<p class="lead">{{ review.rate }}/5</p>
+								<p class="lead">{{review.title}}</p>
+								<p class="lead">{{ review.commentary }}</p>
+							</div>
 
-        <div class="col-lg-4">
-            <div id="map">
-            
-            </div>
-        </div> 
-        </div>
-    </div>
+							<div class="col-lg-2">
+								<a href="{{ path('delete_review',{'id':review.id}) }}" class="btn btn-danger">Supprimer</a>
+							</div>
 
-    <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
-    var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-    mapboxClient.geocoding.forwardGeocode({
-        query: '{{place.adress}},{{place.city.name}}',
-        autocomplete: false,
-        limit: 1
-    })
-    .send()
-    .then(function (response) {
-        if (response && response.body && response.body.features && response.body.features.length) {
-            var feature = response.body.features[0];
+						</div>
+					{% endfor %}
+				</div>
 
-            var map = new mapboxgl.Map({
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v11',
-                center: feature.center,
-                zoom: 12
-            });
-            var el = document.createElement('div');
-                el.id = 'marker';
+				<h1 class="text-center my-5">Ajouter un avis</h1>
+				<div class="add-review mx-auto" style="width: 25rem;">
+					{{form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+					{{ form_widget(form) }}
+					<button class="btn btn-warning mb-3">Crée</button>
+					{{ form_end(form) }}
+				</div>
 
-            new mapboxgl.Marker(el)
-                .setLngLat(feature.center)
-                .addTo(map);
-        }
-    });
-    
-</script>
+			</div>
+
+			<div class="col-lg-5 mx-auto" style="height: 40rem;">
+				<div id="map"></div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
+var mapboxClient = mapboxSdk({accessToken: mapboxgl.accessToken});
+mapboxClient.geocoding.forwardGeocode({query: '{{ place.adress }},{{ place.city.name }}', autocomplete: false, limit: 1}).send().then(function (response) {
+if (response && response.body && response.body.features && response.body.features.length) {
+var feature = response.body.features[0];
+
+var map = new mapboxgl.Map({container: 'map', style: 'mapbox://styles/mapbox/streets-v11', center: feature.center, zoom: 12});
+var el = document.createElement('div');
+el.id = 'marker';
+
+new mapboxgl.Marker(el).setLngLat(feature.center).addTo(map);
+}
+});
+	</script>
 
 {% endblock %}
