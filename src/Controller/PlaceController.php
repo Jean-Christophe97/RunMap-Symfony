@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Place;
 use App\Form\PlaceType;
+use App\Form\PlaceEditType;
 use App\Repository\PlaceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,6 +64,27 @@ class PlaceController extends AbstractController
         }
 
         return $this->render('place/new_place.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/edit/place/{id}", name="edit_place")
+     */
+    public function edit_place($id, Request $request)
+    {
+        $place = $this->getDoctrine()->getRepository(Place::class)->find($id);
+
+        $form = $this->createForm(PlaceEditType::class, $place);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('allPlaces');
+        }
+        return $this->render('place/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
