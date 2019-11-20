@@ -103,7 +103,7 @@ class Place
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -115,7 +115,7 @@ class Place
         return $this->adress;
     }
 
-    public function setAdress(string $adress): self
+    public function setAdress(?string $adress): self
     {
         $this->adress = $adress;
 
