@@ -46,6 +46,11 @@ class Review
      */
     private $place;
 
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
