@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class CityType extends AbstractType
 {
@@ -14,9 +15,11 @@ class CityType extends AbstractType
     {
         $builder
             ->add('name', TextType::class,[
-                'label'  => 'Nom',
+                'label'  => 'Nom de Ville',
             ])
-            ->add('postalcode')
+            ->add('postalcode', NumberType::class,[
+                'label' => 'Code Postal'
+            ])
             //->add('created_at')
         ;
     }
