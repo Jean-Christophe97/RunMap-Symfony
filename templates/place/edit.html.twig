@@ -5,12 +5,9 @@
 {% block body %}
 <div class="container">
 <h1 class="text-center my-5">Modifier le lieu</h1>
-{{form_start(formCity, {'attr': {'novalidate': 'novalidate'}}) }}
-{{form_start(formPlace, {'attr': {'novalidate': 'novalidate'}}) }}
-{{ form_widget(formCity) }}
-{{ form_widget(formCity) }}
+{{form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_widget(form) }}
 <button class="btn btn-warning">Valider</button>
-{{ form_end(formCity) }}
-{{ form_end(formPlace) }}
+{{ form_end(form) }}
 </div>
 {% endblock %}
