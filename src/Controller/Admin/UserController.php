@@ -5,12 +5,14 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/admin/user", name="admin_user")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function allUsers(UserRepository $repository)
     {
@@ -23,6 +25,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/delete/user/{id}", name="delete_user")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function deleteUser($id)
     {

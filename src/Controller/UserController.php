@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Form\UserEditType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -42,6 +43,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/profil", name="user_profil")
+     * @IsGranted("ROLE_USER")
      */
     public function profil()
     {
@@ -54,6 +56,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/edit/profil", name="edit_profil")
+     * @IsGranted("ROLE_USER")
      */
     public function edit_profil(Request $request)
     {
