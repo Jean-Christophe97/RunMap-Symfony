@@ -80,7 +80,8 @@
 							<li class="list-group-item">{{ place.createdat|date('d-m-Y') }}</li>
 						</ul>
 						<div class="card-body">
-							<a href="#" class="card-link btn ">Voir les Avis</a>
+							<a href="#" class="card-link btn link-reviews ">Voir les Avis</a>
+							<a href="#" class="card-link btn hide-reviews ">Masquer les Avis</a>
 							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 								<a href="{{ path('edit_place', {'id':place.id}) }}" class="btn btn-warning ml-3">Modifier</a>
 							{% endif %}
@@ -131,7 +132,7 @@
 			{% endif %}
 			</div>
 
-			<div class="col-lg-5 mx-auto" style="height: 40rem;">
+			<div class="col-lg-5 mx-auto map_show" style="height: 40rem;">
 				<div id="map"></div>
 			</div>
 		</div>
@@ -152,5 +153,29 @@ new mapboxgl.Marker(el).setLngLat(feature.center).addTo(map);
 }
 });
 	</script>
+
+{# show review #}
+<script>
+	$(document).ready(function(){
+
+		// je masque les reviews a l'ouverture de la page
+		$('.reviews').hide();
+		$('.hide-reviews').hide();
+
+		//au clic j'affiche les avis 
+		$('.link-reviews').click(function(){
+				$(".link-reviews").hide();
+				$(".hide-reviews").show();
+				$(".reviews").show();
+		});
+
+		// au clic je cache les avis
+		 $('.hide-reviews').click(function(){
+				$(".hide-reviews").hide();
+				$(".link-reviews").show();
+				$(".reviews").hide();	
+		});
+	});
+</script>	
 
 {% endblock %}

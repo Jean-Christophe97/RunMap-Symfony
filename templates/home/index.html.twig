@@ -1,100 +1,118 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bienvenue !{% endblock %}
+{% block title %}Bienvenue !
+{% endblock %}
 {% block nav %}{% endblock %}
 {% block body %}
-<div class="container">
+	<div
+		class="container">
 
-<!-- main -->
-{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-<h1 class="title text-center pt-4">Localise ton futur terrain de jeu {{ app.user.firstname }}</h1>
-{% else %}
+		<!-- main -->
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			<h1 class="title text-center pt-4">Localise ton futur terrain de jeu
+				{{ app.user.firstname }}</h1>
+		{% else %}
 
-    <h1 class="title text-center pt-4">Localise ton futur terrain de jeu !</h1>
-    
-<div class="row">
-    <div class="col-lg-5">
-        <img class="mx-auto" src="assets/image/logo.png" alt="">
-    </div>
-    <div class="col-lg-5">
-        <div class="row">
-            <a class="p__home mx-auto bg-warning text-white font-weight-bold" href={{ path('register') }}>Inscription</a>
-        </div>
-        <div class="row">
-            <a  class="p__home__2 mx-auto bg-primary text-white font-weight-bold" href="#">S'inscrire avec Facebook</a>
-        </div>
-    </div>
-</div>
-{% endif %} 
-</div>
+			<h1 class="title text-center pt-4">Localise ton futur terrain de jeu !</h1>
 
-<!-- icone -->
-    <a href="#jaune" class="icone p-4"><i class="fas fa-arrow-down"></i></a>
-   
+			<div class="row">
+				<div class="col-lg-5">
+					<img class="mx-auto" src="assets/image/logo.png" alt="">
+				</div>
+				<div class="col-lg-5">
+					<div class="row">
+						<a class="p__home mx-auto bg-warning text-white font-weight-bold" href={{ path('register') }}>Inscription</a>
+					</div>
+					<div class="row">
+						<a class="p__home__2 mx-auto bg-primary text-white font-weight-bold" href="#">S'inscrire avec Facebook</a>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
 
-<!-- search -->
-<div class="container-fluid">
-<div class="search-main">
-    <h6 class="text-warning text-center pt-4">C'EST AUSSI SIMPLE QUE ÇA </h6>
-      <a href="{{ path('allPlaces') }}" class="search btn btn-warning">RECHERCHER</a>
-<div class="container"> 
-    <h3 class="text-center text-white last-place">Derniers Lieux ajoutés</h3>
-    {# <div class="row mt-2"> #}
-    {% for place in places %}
-      <div class="col-lg-4 mx-auto">
-            <div class="card mx-auto my-2" style="width: 18rem;">
-            <img src="assets/image/card2.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title text-center">{{ place.name }}</h5>
-                <p class="card-text">Adresse: {{ place.adress }}</p>
-            </div>
-            <div class="card-body text-center">
-                <a href="{{ path('place', {'id':place.id}) }}" class="btn btn-warning font-weight-bold">Détails</a>
-            </div>
-            </div>
-      </div>
-      {% endfor %}
-      {# </div> #}
-</div>           
-</div>
-</div>
+	<!-- icone -->
+	<a href="#jaune" class="icone p-4">
+		<i class="fas fa-arrow-down"></i>
+	</a>
 
-<!-- footer -->
-<div class="footer bg-dark">
-<span id="jaune"></span>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <h6 class=" text-center text-warning">RUNMAP</h6>
-                <p class="text-white text-center">©2019-Runmap</p>
-            </div>
-            <div class="col-lg-3">
-                
-                <ul class="list-nav">
-                <h6 class=" text-center text-warning">MENU</h6>
-                    <li class="text-white text-center"><a href="#">À PROPOS</a></li>
-                    <li class="text-white text-center"><a href="#">CONDITIONS</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-3">
-            
-                <ul class="list-nav text-center">
-                <h6 class="text-center text-warning">NOUS SUIVRE</h6>
-                    <li class="text-white text-center"><a href="#">FACEBOOK</a></li>
-                    <li class="text-white text-center"><a href="#">TWITTER</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-3">
-                <ul class="list-nav">
-                <h6 class="text-warning text-center">RUNMAP FAMILY</h6>
-                    <li class="text-white text-center"><a href="#">AJOUTER UNE VILLE</a></li>
-                    <li class="text-white text-center"><a href="{{ path('new_place') }}">AJOUTER UN LIEU</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
+	<!-- search -->
+	<div class="container-fluid">
+		<div class="search-main">
+			<h6 class="text-warning text-center pt-4">C'EST AUSSI SIMPLE QUE ÇA
+			</h6>
+			<a href="{{ path('allPlaces') }}" class="search btn btn-warning">RECHERCHER</a>
+			<div class="container search-card">
+				<h3 class="text-center text-white last-place">Derniers Lieux ajoutés</h3>
+				{# <div class="row mt-2"> #}
+				{% for place in places %}
+					<div class="col-lg-4 mx-auto">
+						<div class="card mx-auto  my-2" style="width: 18rem; height:25rem;">
+							<img src="assets/image/card2.jpg" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title text-center">{{ place.name }}</h5>
+								<p class="card-text">Adresse:
+									{{ place.adress }}</p>
+							</div>
+							<div class="card-body text-center">
+								<a href="{{ path('place', {'id':place.id}) }}" class="btn btn-warning font-weight-bold">Détails</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+				{# </div> #}
+			</div>
+		</div>
+	</div>
+
+	<!-- footer -->
+	<div class="footer bg-dark">
+		<span id="jaune"></span>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<h6 class=" text-center text-warning">RUNMAP</h6>
+					<p class="text-white text-center">©2019-Runmap</p>
+				</div>
+				<div class="col-lg-3">
+
+					<ul class="list-nav">
+						<h6 class=" text-center text-warning">MENU</h6>
+						<li class="text-white text-center">
+							<a href="#">À PROPOS</a>
+						</li>
+						<li class="text-white text-center">
+							<a href="#">CONDITIONS</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-3">
+
+					<ul class="list-nav text-center">
+						<h6 class="text-center text-warning">NOUS SUIVRE</h6>
+						<li class="text-white text-center">
+							<a href="https://www.facebook.com/">FACEBOOK</a>
+						</li>
+						<li class="text-white text-center">
+							<a href="https://twitter.com/home">TWITTER</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-3">
+					<ul class="list-nav">
+						<h6 class="text-warning text-center">RUNMAP FAMILY</h6>
+						<li class="text-white text-center">
+							<a href="{{ path('new_place') }}">AJOUTER UNE VILLE</a>
+						</li>
+						<li class="text-white text-center">
+							<a href="{{ path('new_place') }}">AJOUTER UN LIEU</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 {% endblock %}
