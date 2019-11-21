@@ -5,19 +5,20 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\Place;
 
+use App\Entity\Review;
 use App\Form\CityType;
 use App\Form\PlaceType;
-use App\Repository\CityRepository;
 
-use App\Entity\Review;
 use App\Form\ReviewType;
 use App\Form\PlaceEditType;
+use App\Repository\CityRepository;
 
 use App\Repository\PlaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PlaceController extends AbstractController
@@ -82,6 +83,7 @@ class PlaceController extends AbstractController
 
     /**
      * @Route("/create/place", name="new_place")
+     * @IsGranted("ROLE_USER")
      */
     public function newPlace(Request $request, CityRepository $cityRepository, ObjectManager $manager)
     {
@@ -158,6 +160,8 @@ class PlaceController extends AbstractController
 
     /**
      * @Route("/edit/place/{id}", name="edit_place")
+     * @IsGranted("ROLE_USER")
+     * 
      */
     public function edit_place($id, Request $request)
     {
