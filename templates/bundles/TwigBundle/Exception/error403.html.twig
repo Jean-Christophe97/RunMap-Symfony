@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Page non trouvée{% endblock %}
+{% block nav %}{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="img-error text-center">
+            <img src="/assets/image/error.png" style="width:20rem;" alt="">
+        </div>    
+        <h1 class="text-center">Accés refusé</h1>
+        <div class="back text-center my-3">
+            <a href="{ path('home') }" class="btn btn-warning">Retour à l'accueil</a>
+        </div>    
+    </div>
+
+{% endblock %}
