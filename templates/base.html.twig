@@ -8,35 +8,22 @@
         {%  endblock %}
         {% block stylesheets %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/style.css">
+        <link rel="stylesheet" href="/assets/style.css">
         <script src="https://kit.fontawesome.com/498d14878f.js" crossorigin="anonymous"></script>
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     {% endblock %}
-        <a class="navbar-brand" href="{{ path('home') }}">Run<b class="text-warning">Map</b></a>
-     
-        <div class="ml-auto">
-            <form class="form-inline my-2 my-lg-0">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a href="{{ path('user_profil') }}"><i class="fas fa-user mr-3"></i></a>
-            <a href="{{ path('app_logout') }}" class="btn btn-warning my-2 my-sm-0 font-weight-bold">Deconnexion</a>
-            
-            {% else %}
-                <a href="{{ path('app_login') }}" class="btn btn-warning my-2 my-sm-0 font-weight-bold">Connexion</a>
-            {% endif %}    
-            </form>
-        </div>
-    </nav>
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}">
-                        {{ message }}
-            </div>   
-        {% endfor %}                
-    {% endfor %}
+
+    {# dossier template/components/navbar #}
+    {{ include('components/navbar.html.twig') }}
+
 
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
