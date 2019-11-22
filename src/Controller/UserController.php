@@ -28,6 +28,9 @@ class UserController extends AbstractController
          // Encodage du mot de passe
          $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
 
+        //role user par défaut
+        $roles = array('ROLE_USER');
+        $user->setRoles($roles);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
