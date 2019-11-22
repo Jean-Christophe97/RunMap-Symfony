@@ -138,44 +138,10 @@
 		</div>
 	</div>
 
-	<script>
-		mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
-var mapboxClient = mapboxSdk({accessToken: mapboxgl.accessToken});
-mapboxClient.geocoding.forwardGeocode({query: '{{ place.adress }},{{ place.city.name }}', autocomplete: false, limit: 1}).send().then(function (response) {
-if (response && response.body && response.body.features && response.body.features.length) {
-var feature = response.body.features[0];
-
-var map = new mapboxgl.Map({container: 'map', style: 'mapbox://styles/mapbox/streets-v11', center: feature.center, zoom: 12});
-var el = document.createElement('div');
-el.id = 'marker';
-
-new mapboxgl.Marker(el).setLngLat(feature.center).addTo(map);
-}
-});
-	</script>
+{# show map #}
+{% include "components/js/show_map.html.twig" %}
 
 {# show review #}
-<script>
-	$(document).ready(function(){
-
-		// je masque les reviews a l'ouverture de la page
-		$('.reviews').hide();
-		$('.hide-reviews').hide();
-
-		//au clic j'affiche les avis 
-		$('.link-reviews').click(function(){
-				$(".link-reviews").hide();
-				$(".hide-reviews").show();
-				$(".reviews").show();
-		});
-
-		// au clic je cache les avis
-		 $('.hide-reviews').click(function(){
-				$(".hide-reviews").hide();
-				$(".link-reviews").show();
-				$(".reviews").hide();	
-		});
-	});
-</script>	
+{% include "components/js/reviews_show.html.twig" %}
 
 {% endblock %}

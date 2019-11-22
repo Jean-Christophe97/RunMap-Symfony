@@ -44,8 +44,10 @@
 			</h6>
 			<a href="{{ path('allPlaces') }}" class="search btn btn-warning">RECHERCHER</a>
 			<div class="container search-card">
-				<h3 class="text-center text-white last-place">Derniers Lieux ajoutés</h3>
+				<h3 class="text-center text-white last-place">Dernier lieu ajouté</h3>
+
 				{# <div class="row mt-2"> #}
+				
 				{% for place in places %}
 					<div class="col-lg-4 mx-auto">
 						<div class="card mx-auto  my-2" style="width: 18rem; height:25rem;">
@@ -61,12 +63,16 @@
 						</div>
 					</div>
 				{% endfor %}
-				{# </div> #}
+
+				
+				{#</div>#}
 			</div>
 		</div>
 	</div>
 
 	<!-- footer -->
+	<div class="container-fluid">
+
 	<div class="footer bg-dark">
 		<span id="jaune"></span>
 		<div class="container">
@@ -112,6 +118,8 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
 	</div>
 
 

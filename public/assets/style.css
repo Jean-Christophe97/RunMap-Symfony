@@ -31,7 +31,7 @@
 
 /** search section */
 .search-main {
-    height: 100vh;
+    height: 120vh;
     background-image: url(https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/frFR/Images/running-fw19-evergreen-clp-crm-desktop_tcm196-328877.jpg);
     background-position: 50%;
     background-repeat: no-repeat;
@@ -45,16 +45,6 @@
     text-align: center;
     margin:auto;
     font-weight: bold;
-    /* margin-top: 20px; */
-}
-
-@media (max-width: 640px) 
-{
-    .search-card
-    {
-        display: none;
-    }    
-
 }
 
 .last-place

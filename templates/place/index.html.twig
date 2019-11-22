@@ -74,64 +74,7 @@
         </div>
     </div>
     
-
-
     {# map & geocoder script #}
-    <script>
-        // TODO: il faudra faire comme avec le .env.local :  ne pas laisser le token sur github.
-        mapboxgl.accessToken = 'pk.eyJ1IjoiamVhbi1jaHJpc3RvcGhlOTciLCJhIjoiY2sybm1seDhhMG82MDNsbno3MzM0YnA1ayJ9.S2WLt5sQgh-5V_xYo6aPFg';
-        
-        var map = new mapboxgl.Map({
-                    container: 'map', // container id
-                    style: 'mapbox://styles/mapbox/outdoors-v10', // stylesheet location
-                    center: [2.23056, 48.98806], // starting position [lng, lat]
-                    zoom: 5 // starting zoom
-                });
+    {% include "components/js/index_map.html.twig" %}
 
-        var geocoder = new MapboxGeocoder({
-                    accessToken: mapboxgl.accessToken,
-                    mapboxgl: mapboxgl,
-                    marker:false, // to unset the marker after Geocoder result
-                    placeholder:"recherche...",
-                    countries: 'fr',
-                    types: 'place',
-                });
-
-                document.getElementById('geocoder').appendChild(geocoder.onAdd(map));        
-
-        var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-        
-        // loop to create a marker and a popup for each place
-        {% for place in places %}
-        // request to have the latitude and longitude of a place
-        mapboxClient.geocoding.forwardGeocode({
-            query: '{{place.adress}},{{place.city.name}}',
-            autocomplete: false,
-            limit: 1
-        })
-        .send()
-        .then(function (response) {
-            if (response && response.body && response.body.features && response.body.features.length)
-            {
-                // get the longitude and latitude
-                var feature = response.body.features[0];
-                console.log(feature.center[0]) // 2.21903
-                console.log(feature.center[1]); // 48.999953
-                // create the popup
-                var popup = new mapboxgl.Popup({ offset: 10 }) // offset === margin-bottom
-                    .setHTML('<div class="popup-place-name">{{place.name}}</div><div>{{place.city.name}}</div><div><a href="{{ path('place', {id: place.id}) }}">plus de details</a></div>');
-
-                // create DOM element for the marker
-                var el = document.createElement('div');
-                el.id = 'marker';
-
-                // create the marker
-                new mapboxgl.Marker(el)
-                    .setLngLat(feature.center)
-                    .addTo(map)
-                    .setPopup(popup);
-            }
-        });
-        {% endfor %}
-    </script>
 {% endblock %}
