@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Place;
 use App\Entity\Review;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -14,15 +13,16 @@ class ReviewController extends AbstractController
      * @Route("/delete/review/{id}", name="delete_review")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function deleteReview($id)
+    public function deleteReview(Review $review)
     {
-        //je recherche les review par id
         $entityManager = $this->getDoctrine()->getManager();
-        $review = $entityManager->getRepository(Review::class)->find($id);
+
         // suppression de la review puis flush
         $entityManager->remove($review);
         $entityManager->flush();
-        //redirection sur la page admin
-        return $this->redirectToRoute('allPlaces');
+        //redirection sur la Place 
+        return $this->redirectToRoute('place',
+         ['id' => $review->getPlace()->getId(),
+         ]);
     }
 }
