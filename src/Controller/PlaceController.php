@@ -30,8 +30,6 @@ class PlaceController extends AbstractController
     {
         $places = $repository->findAll();
 
-        // dd($places);
-
 
         return $this->render('place/index.html.twig', [
             'places' => $places,
@@ -45,34 +43,36 @@ class PlaceController extends AbstractController
     // https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
     {
         $reviews = $place->getReviews();
-        // dd($reviews);
 
 
         $review = new Review();
 
         $user = $this->getUser();
 
-
+        // je crée le formulaire reliée à l'entitée review 
         $form = $this->createForm(ReviewType::class, $review);
 
+        //je récupere la requete
         $form->handleRequest($request);
 
+        // condition si le form et soumis est valide 
         if ($form->isSubmitted() && $form->isValid())
         {
-
+            // j'associe l'utilisateur connecté à la review
             $review->setUser($user);
+            // j'associe la review à la place actuelle
             $review->setPlace($place);
 
+            // j'appelle entitymanager pour sauvegarder mes données en BDD persist et flush
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($review);
             $entityManager->flush();
             
+            // je retourne un message flash
             $this->addFlash('success', 'Avis ajouté');
+            // je renvoie l'utilisateur sur la place actuelle
             return $this->redirectToRoute('place', ['id' => $place->getId()]);
         }
-
-
-
 
         return $this->render('place/show.html.twig', [
             'reviews' => $reviews,
@@ -165,6 +165,7 @@ class PlaceController extends AbstractController
      */
     public function edit_place($id, Request $request)
     {
+        // je récupere une place par id
         $place = $this->getDoctrine()->getRepository(Place::class)->find($id);
 
         $form = $this->createForm(PlaceEditType::class, $place);

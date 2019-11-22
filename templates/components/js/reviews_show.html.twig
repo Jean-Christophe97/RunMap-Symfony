@@ -1,0 +1,22 @@
+<script>
+	$(document).ready(function(){
+
+		// je masque les reviews a l'ouverture de la page
+		$('.reviews').hide();
+		$('.hide-reviews').hide();
+
+		//au clic j'affiche les avis 
+		$('.link-reviews').click(function(){
+				$(".link-reviews").hide();
+				$(".hide-reviews").show();
+				$(".reviews").show();
+		});
+
+		// au clic je cache les avis
+		 $('.hide-reviews').click(function(){
+				$(".hide-reviews").hide();
+				$(".link-reviews").show();
+				$(".reviews").hide();	
+		});
+	});
+</script>

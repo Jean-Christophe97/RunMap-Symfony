@@ -13,6 +13,7 @@ class HomeController extends AbstractController
      */
     public function index(PlaceRepository $repo)
     {
+        // je récupere le dernier lieu crée
         $places = $repo->findPlaceByDate();
         // dd($places);
         return $this->render('home/index.html.twig', [
