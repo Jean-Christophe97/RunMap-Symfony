@@ -149,7 +149,7 @@ class PlaceController extends AbstractController
             //dd($place);
             $manager->flush();
             
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('place', ['id' => $place->getId()]);
         }
 
         return $this->render('place/new_place.html.twig', [
