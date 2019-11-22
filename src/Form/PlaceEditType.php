@@ -25,14 +25,7 @@ class PlaceEditType extends AbstractType
             ])
             ->add('complementinfo', TextareaType::class,[
                 'label'  => 'Informations',
-            ])
-            // ->add('created_at')
-            // ->add('updated_at')
-            // ->add('longitude')
-            // ->add('latitude')
-            // ->add('city')
-            // ->add('sports')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

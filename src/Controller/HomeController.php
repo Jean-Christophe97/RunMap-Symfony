@@ -15,7 +15,7 @@ class HomeController extends AbstractController
     {
         // je récupere le dernier lieu crée
         $places = $repo->findPlaceByDate();
-        // dd($places);
+        
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'places' => $places

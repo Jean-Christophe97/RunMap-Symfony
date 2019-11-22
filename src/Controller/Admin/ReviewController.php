@@ -22,7 +22,7 @@ class ReviewController extends AbstractController
         $entityManager->flush();
         //redirection sur la Place 
         return $this->redirectToRoute('place',
-         ['id' => $review->getPlace()->getId(),
-         ]);
+        ['id' => $review->getPlace()->getId(),
+        ]);
     }
 }

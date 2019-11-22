@@ -26,8 +26,7 @@ class UserController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
         
          // Encodage du mot de passe
-         $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-
+        $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
         //role user par défaut
         $roles = array('ROLE_USER');
         $user->setRoles($roles);
@@ -38,9 +37,8 @@ class UserController extends AbstractController
         $this->addFlash('success', 'utilisateur crée');
         return $this->redirectToRoute('app_login');
     }
-
         return $this->render('user/index.html.twig', [
-                'form' => $form->createView()
+            'form' => $form->createView()
         ]);
     }
 
@@ -51,7 +49,6 @@ class UserController extends AbstractController
     public function profil()
     {
         $user = $this->getUser();
-
         return $this->render('user/profil.html.twig', [
             'user' => $user,
         ]);
@@ -64,7 +61,6 @@ class UserController extends AbstractController
     public function edit_profil(Request $request)
     {
         $user = $this->getUser();
-
         $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
@@ -80,4 +76,4 @@ class UserController extends AbstractController
         ]);
     }
 
-    }
+}

@@ -19,9 +19,7 @@ class CityType extends AbstractType
             ])
             ->add('postalcode', NumberType::class,[
                 'label' => 'Code Postal'
-            ])
-            //->add('created_at')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
