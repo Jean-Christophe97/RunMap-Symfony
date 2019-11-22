@@ -2,6 +2,9 @@
      
         <div class="ml-auto">
             <form class="form-inline my-2 my-lg-0">
+            {% if is_granted('ROLE_ADMIN')%}
+            <a href="{{ path('admin_user') }}" class="btn btn-danger my-2 mr-3 my-sm-0 font-weight-bold">Admin</a>
+            {% endif %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path('user_profil') }}"><i class="fas fa-user mr-3"></i></a>
             <a href="{{ path('app_logout') }}" class="btn btn-warning my-2 my-sm-0 font-weight-bold">Deconnexion</a>
