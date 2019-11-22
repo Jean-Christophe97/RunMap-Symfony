@@ -2,6 +2,20 @@
 
 {% block title %}Hello UserController!{% endblock %} 
 
+{% block jqueryscripts %}
+{# style de l'autocomplete #}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous">
+</script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block body %}
 
 <div class="container">
@@ -10,8 +24,105 @@
     {{form_start(formPlace, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(formCity) }}
     {{ form_widget(formPlace) }}
+
     <button class="btn btn-warning">Créer</button> 
     {{ form_end(formCity) }}
     {{ form_end(formPlace) }}
 </div>
+
+<script>
+    // statefull object
+    var app = {
+        cityName: {
+          suggestions:''
+        },
+        placeAdress: {
+          suggestions:''
+        }
+    };
+
+    // define or modify a new property on an object
+    Object.defineProperties(app, {
+        // functions'definition
+        "getCityNameSuggestions": { get: function () { return this.cityName.suggestions}}, // getter
+        "setCityNameSuggestions": { set: function (suggestionsList) { this.cityName.suggestions = suggestionsList}}, // setter
+
+        "getPlaceAdressuggestions": { get: function () { return this.placeAdress.suggestions}}, // getter
+        "setPlaceAdressSuggestions": { set: function (suggestionsList) { this.placeAdress.suggestions = suggestionsList}} // setter
+    } );
+
+    // function's definition
+    let searchCityName = (cityName) => {
+        // request the city's name from the api.gouv
+        $.ajax({
+          method: "GET",
+          url: `https://geo.api.gouv.fr/communes?nom=${cityName}&fields=nom&format=json&geometry=centre`,
+        })
+          .done(function( response ) {
+            // The map() method creates a new array with the results of calling a provided function 
+            // on every element in the calling array
+            var suggestionsList = response.map((city) => (city.nom));
+
+            app.setCityNameSuggestions = suggestionsList;
+
+            // jqueryUI autocomplete widget
+            // https://api.jqueryui.com/autocomplete/
+            $( "#city_name" ).autocomplete({
+                source: app.getCityNameSuggestions,
+                minLength:3,
+            });
+          });
+    }
+
+    let cityNameInputValue = "";
+    // Event Listener when the key up in the input focused
+    $('#city_name').keyup(function(event) {
+
+        // input's value
+        cityNameInputValue = event.target.value
+
+        if (cityNameInputValue.length >= 3) {
+            searchCityName(cityNameInputValue)
+        } 
+    });
+
+
+    // function's definition
+    let searchPlaceAdress = (placeAdress) => {
+        // request the adress'name from the api.gouv
+        $.ajax({
+          method: "GET",
+          url: `https://api-adresse.data.gouv.fr/search/?q=${placeAdress}&limit=5`,
+        })
+          .done(function( response ) {
+            // The map() method creates a new array with the results of calling a provided function 
+            // on every element in the calling array
+            
+            var suggestionsList = response.features.map((adress) => (adress.properties.name));
+            console.log('suggestionsList : ', suggestionsList);
+            app.setPlaceAdressSuggestions = suggestionsList;
+            console.log('suggestions : ', app.placeAdress.suggestions)
+            console.log('getSuggestions : ', app.getPlaceAdressuggestions)
+
+            // jqueryUI autocomplete widget
+            // https://api.jqueryui.com/autocomplete/
+            $( "#place_adress" ).autocomplete({
+                source: app.getPlaceAdressuggestions,
+                minLength:0,
+            });
+          });
+    }
+
+    let placeAdressInputValue = "";
+    // Event Listener when the key up in the input focused
+    $('#place_adress').keyup(function(event) {
+
+        // input's value
+        placeAdressInputValue = event.target.value
+
+            searchPlaceAdress(placeAdressInputValue);
+        // if (placeAdressInputValue.length >= 3) {
+        // } 
+    });
+</script>
 {% endblock %}
