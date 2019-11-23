@@ -104,7 +104,15 @@
 							</div>
 
 							<div class="col-lg-7">
-								<p class="lead">{{ review.rate }}/5</p>
+								<span class="rate">
+									{% for i in 1..5 %}
+										{% if i <= review.rate %}
+											<i class="fas fa-star"></i>
+										{% else %}
+											<i class="far fa-star"></i>
+										{% endif %}
+									{% endfor %}
+								</span>
 								<p class="lead">{{review.title}}</p>
 								<p class="lead">{{ review.commentary }}</p>
 							</div>
