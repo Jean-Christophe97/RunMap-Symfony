@@ -26,15 +26,7 @@ class PlaceType extends AbstractType
             ])
             ->add('complementinfo', TextareaType::class,[
                 'label'  => 'Informations',
-            ])
-            // ->add('created_at')
-            // ->add('longitude')
-            // ->add('latitude')
-            // ->add('city', TextType::class,[
-            //     'label'  => 'Ville',
-            // ])
-            // ->add('sports')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

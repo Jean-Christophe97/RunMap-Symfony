@@ -62,16 +62,6 @@ class Place
     private $updated_at;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $longitude;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $latitude;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="place", cascade={"remove"})
      */
     private $reviews;
@@ -166,30 +156,6 @@ class Place
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getLongitude(): ?float
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(?float $longitude): self
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?float
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(?float $latitude): self
-    {
-        $this->latitude = $latitude;
 
         return $this;
     }
