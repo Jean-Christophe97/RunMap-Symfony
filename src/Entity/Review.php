@@ -41,11 +41,11 @@ class Review
 
     /**
      * @ORM\Column(type="integer")
-     *  @Assert\Range(
-     *      min = 1,
-     *      max = 5,
-     *      minMessage = "Votre note doit être entre 1 et 5",
-     *      maxMessage = "Votre note doit être entre 1 et 5"
+     * @Assert\Range(
+     *     min = 1,
+     *     max = 5,
+     *     minMessage = "Votre note doit être entre 1 et 5",
+     *     maxMessage = "Votre note doit être entre 1 et 5"
      * )
      */
     private $rate;

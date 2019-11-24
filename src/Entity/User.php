@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -25,7 +26,6 @@ class User implements UserInterface
      * @Assert\Email(
      *     message = "Entrez un email valide",
      *     checkMX = true
-     * )
      * )
      */
     private $email;
@@ -71,12 +71,18 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Positive
+     * @Assert\Range(
+     *     min = 1,
+     *     max = 110,
+     *     minMessage = "Votre note doit être entre 1 et 110",
+     *     maxMessage = "Votre note doit être entre 1 et 110"
+     * )
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice({"man", "woman"})
      */
     private $sex;
 

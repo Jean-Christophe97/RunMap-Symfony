@@ -26,7 +26,6 @@ class Place
      *      minMessage = "Votre nom doit avoir au minimum {{ limit }} caractères",
      *      maxMessage = "Votre nom doit avoir au maximum {{ limit }} caractères"
      * )
-
      */
     private $name;
 
@@ -48,6 +47,12 @@ class Place
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 500,
+     *      minMessage = "Votre adresse doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Votre adresse doit avoir au maximum {{ limit }} caractères"
+     * )
      */
     private $complementinfo;
 
