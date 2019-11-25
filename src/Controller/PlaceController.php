@@ -79,63 +79,61 @@ class PlaceController extends AbstractController
      */
     public function newPlace(Request $request, CityRepository $cityRepository, ObjectManager $manager)
     {
-        $city = new City();
-        $formCity = $this->createForm(CityType::class, $city);
+        $newCity = new City();
+        $formCity = $this->createForm(CityType::class, $newCity);
         $formCity->handleRequest($request);
         //dd($formCity);
-        $place = new Place();
-        $formPlace = $this->createForm(PlaceType::class, $place);
+        $newPlace = new Place();
+        $formPlace = $this->createForm(PlaceType::class, $newPlace);
         $formPlace->handleRequest($request);
         $city = $formCity["name"]->getData();
         //dump($city);
         $cityNameBdd = $cityRepository->findOneByName($city);
         //dd($cityNameBdd);
+        if ($formCity->isSubmitted() && $formCity->isValid()){
+            if ($cityNameBdd === null){
+                $cityName = $formCity["name"]->getData();
+                //dump($cityName);
+                $cityPostal = $formCity["postalcode"]->getData();
+                //dd($cityPostal);
+                $newCity->setName($cityName);
+                $newCity->setPostalcode($cityPostal);
 
-        if ($cityNameBdd === null){
-
-            $newCity = new City();
-            $formCity = $this->createForm(CityType::class, $newCity);
-            $formCity->handleRequest($request);
-            $cityName = $formCity["name"]->getData();
-            //dump($cityName);
-            $cityPostal = $formCity["postalcode"]->getData();
-            //dd($cityPostal);
-            $newCity->setName($cityName);
-            $newCity->setPostalcode($cityPostal);
-                    
-            if ($formCity->isSubmitted() && $formCity->isValid()){
                 $manager->persist($newCity);
                 $manager->flush();
                 //dd($newCity);
-            }
+            
                 $cityId = $newCity;
-        } else {
-            $cityId = $cityNameBdd;
+                //dd($cityId);
+            } else {
+                $cityId = $cityNameBdd;
+                //dd($cityId);
             }
-
-        $placeName = $formPlace["name"]->getData();
-        //dump($placeName);
-        $placeAdress = $formPlace["adress"]->getData();
-        //dump($placeAdress);
-        $placeSchedule = $formPlace["schedule"]->getData();
-        //dump($placeSchedule);
-        $placeComplementInfo = $formPlace["complementinfo"]->getData();
-        //dump($placeComplementInfo);
-        $place->setName($placeName);
-        $place->setAdress($placeAdress);
-        $place->setSchedule($placeSchedule);
-        $place->setComplementinfo($placeComplementInfo);
-        //dd($cityId);
-        $place->setCity($cityId);
-        //dd($place);
+        
         if ($formPlace->isSubmitted() && $formPlace->isValid()){
-            // $manager = $this->getDoctrine()->getManager();
-            $manager->persist($place);
+            $placeName = $formPlace["name"]->getData();
+            //dump($placeName);
+            $placeAdress = $formPlace["adress"]->getData();
+            //dump($placeAdress);
+            $placeSchedule = $formPlace["schedule"]->getData();
+            //dump($placeSchedule);
+            $placeComplementInfo = $formPlace["complementinfo"]->getData();
+            //dump($placeComplementInfo);
+            $newPlace->setName($placeName);
+            $newPlace->setAdress($placeAdress);
+            $newPlace->setSchedule($placeSchedule);
+            $newPlace->setComplementinfo($placeComplementInfo);
+            //dd($cityId);
+            $newPlace->setCity($cityId);
+            //dd($place);
+            $manager->persist($newPlace);
             //dd($place);
             $manager->flush();
             
-            return $this->redirectToRoute('place', ['id' => $place->getId()]);
+            return $this->redirectToRoute('place', ['id' => $newPlace->getId()]);
         }
+    }        
+
 
         return $this->render('place/new_place.html.twig', [
             'formCity' => $formCity->createView(),
