@@ -39,8 +39,8 @@ class Place
      * @Assert\Length(
      *      min = 5,
      *      max = 100,
-     *      minMessage = "Votre adresse doit avoir au minimum {{ limit }} caractères",
-     *      maxMessage = "Votre adresse doit avoir au maximum {{ limit }} caractères"
+     *      minMessage = "Les horaires doivent avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Les horaires doivent avoir au maximum {{ limit }} caractères"
      * )
      */
     private $schedule;
@@ -50,8 +50,8 @@ class Place
      * @Assert\Length(
      *      min = 5,
      *      max = 500,
-     *      minMessage = "Votre adresse doit avoir au minimum {{ limit }} caractères",
-     *      maxMessage = "Votre adresse doit avoir au maximum {{ limit }} caractères"
+     *      minMessage = "Votre message doit avoir au minimum {{ limit }} caractères",
+     *      maxMessage = "Votre message doit avoir au maximum {{ limit }} caractères"
      * )
      */
     private $complementinfo;

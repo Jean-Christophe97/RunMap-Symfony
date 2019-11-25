@@ -37,8 +37,8 @@ class City
      * @Assert\Range(
      *      min = 1,
      *      max = 10,
-     *      minMessage = "Votre note doit être entre 1 et 10",
-     *      maxMessage = "Votre note doit être entre 1 et 10"
+     *      minMessage = "Votre code postal doit être entre 1 et 10",
+     *      maxMessage = "Votre code postal doit être entre 1 et 10"
      * )
      */
     private $postalcode;

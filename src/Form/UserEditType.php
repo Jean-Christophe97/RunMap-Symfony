@@ -23,8 +23,8 @@ class UserEditType extends AbstractType
             ->add('age', NumberType::class)
             ->add('sex', ChoiceType::class,[
                 'choices' => [
-                    'man' => 'homme',
-                    'woman' => 'femme'
+                    'homme' => 'homme',
+                    'femme' => 'femme'
                 ],
             ])
         ;
