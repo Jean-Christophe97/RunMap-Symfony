@@ -34,11 +34,11 @@ class City
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(
+     * @Assert\Length(
      *      min = 1,
      *      max = 10,
-     *      minMessage = "Votre code postal doit être entre 1 et 10",
-     *      maxMessage = "Votre code postal doit être entre 1 et 10"
+     *      minMessage = "Votre code postal doit avoir entre 1 et 10 chiffres",
+     *      maxMessage = "Votre code postal doit avoir entre 1 et 10 chiffres"
      * )
      */
     private $postalcode;
