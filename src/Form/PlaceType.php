@@ -22,7 +22,7 @@ class PlaceType extends AbstractType
                 'label'  => 'Adresse',
             ])
             ->add('schedule', TextType::class,[
-                'label'  => 'Horraire',
+                'label'  => 'Horaire',
             ])
             ->add('complementinfo', TextareaType::class,[
                 'label'  => 'Informations',
