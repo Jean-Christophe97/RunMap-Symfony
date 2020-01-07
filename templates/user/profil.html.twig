@@ -16,7 +16,7 @@
     <hr>
     <p>{{ user.sex }}</p>
     <hr>
-    <p>{{ user.createdat|date("m/d/Y") }}</p>
+    <p>date de création : {{ user.createdat|date("m/d/Y") }}</p>
 </div>  
 <a href="{{ path('edit_profil') }}" class="btn btn-outline-warning">Modifier</a>  
 </div>
