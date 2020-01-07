@@ -1,41 +1,34 @@
 .title {
-    margin: 50px;
+    margin: 20px;
 }
-
 .p__home {
-    margin-top: 120px;
+    margin-top: 50px;
     margin-bottom: 50px;
     padding: 15px;
     text-align: center;
     width: 35vh;
     border-radius: 10px;
 }
-
 .p__home__2 {
     padding: 15px;
     text-align: center;
     width: 35vh;
     border-radius: 10px;
 }
-
 .icone {
     display: block;
     width: 40px;
     margin: auto;
 }
-
-
 /** search section */
-
 .search-main {
-    height: 120vh;
+    height: 100%;
     background-image: url(https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/frFR/Images/running-fw19-evergreen-clp-crm-desktop_tcm196-328877.jpg);
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
 }
-
 .search {
     display: block;
     width: 130px;
@@ -43,29 +36,34 @@
     margin: auto;
     font-weight: bold;
 }
-
 .last-place {
     margin-top: 3rem;
 }
-
-
 /* footer */
-
 .footer {
     padding-top: 25px;
     padding-bottom: 30px;
 }
-
 .footer li {
     list-style-type: none;
     font-size: 0.6em;
     line-height: 2em;
 }
-
 .footer a {
     color: white;
 }
-
 span.rate i {
     color: goldenrod;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+img.image {
+    text-align: center;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    max-width: 100%;
+    max-height: 100%;
 }

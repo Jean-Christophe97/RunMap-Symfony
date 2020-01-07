@@ -25,7 +25,7 @@ class PlaceRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('p')
         ->orderBy('p.created_at', 'DESC')
-        ->setMaxResults(1);
+        ->setMaxResults(3);
 
     $query = $qb->getQuery();
 

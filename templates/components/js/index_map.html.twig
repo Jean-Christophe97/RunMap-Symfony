@@ -32,12 +32,10 @@
         })
         .send()
         .then(function (response) {
-            if (response && response.body && response.body.features && response.body.features.length)
-            {
+ 
                 // get the longitude and latitude
                 var feature = response.body.features[0];
-                // console.log(feature.center[0]) // 2.21903
-                // console.log(feature.center[1]); // 48.999953
+
                 // create the popup
                 var popup = new mapboxgl.Popup({ offset: 10 }) // offset === margin-bottom
                     .setHTML('<div class="popup-place-name">{{place.name}}</div><div>{{place.city.name}}</div><div><a href="{{ path('place', {id: place.id}) }}">plus de details</a></div>');
@@ -51,7 +49,6 @@
                     .setLngLat(feature.center)
                     .addTo(map)
                     .setPopup(popup);
-            }
         });
         {% endfor %}
     </script>
