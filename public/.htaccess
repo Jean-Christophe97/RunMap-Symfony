@@ -1,4 +1,4 @@
-<VirtualHost *:80>
+<VirtualHost *:3306>
     ServerName runmap.herokuapp.com
     ServerAlias https://runmap.herokuapp.com/
 
