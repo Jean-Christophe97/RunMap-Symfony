@@ -34,7 +34,7 @@
 			<h6 class="text-warning text-center pt-4">C'EST AUSSI SIMPLE QUE ÇA</h6>
 			<a href="{{ path('allPlaces') }}" class="search btn btn-warning">RECHERCHER</a>
 			<div class="container search-card">
-				<h3 class="text-center text-white last-place">Dernier lieu ajouté</h3>
+				<h3 class="text-center text-white last-place">Derniers lieux ajoutés</h3>
 				<div class="row">
 					{% for place in places %}
 						<div class="col-lg-4">
@@ -42,7 +42,7 @@
 								<img src="assets/image/card2.jpg" class="card-img-top" alt="...">
 								<div class="card-body">
 									<h5 class="card-title text-center">{{ place.name }}</h5>
-									<p class="card-text">Adresse:{{ place.adress }}</p>
+									<p class="card-text">Adresse: {{ place.adress }}</p>
 								</div>
 								<div class="card-body text-center">
 									<a href="{{ path('place', {'id':place.id}) }}" class="btn btn-warning font-weight-bold">Détails</a>
