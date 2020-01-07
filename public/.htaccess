@@ -2,7 +2,7 @@
     ServerName runmap.herokuapp.com
     ServerAlias https://runmap.herokuapp.com/
 
-    DocumentRoot /var/www/project/public
+    DocumentRoot /var/www/RunMap-Symfony/public
     DirectoryIndex /index.php
 
     <Directory /var/www/RunMap-Symfony/public>
