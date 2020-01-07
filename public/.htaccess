@@ -1,5 +1,5 @@
 server {
-    server_name runmap.herokuapp.com www.runmap.herokuapp.com;
+    server_name u3y93bv513l7zv6o.chr7pe7iynqr.eu-west-1.rds.amazonaws.com www.u3y93bv513l7zv6o.chr7pe7iynqr.eu-west-1.rds.amazonaws.com;
     root /var/www/RunMap-Symfony/public;
 
     location / {
