@@ -49,7 +49,7 @@ L’integration de la map se fait avec l’api Mapbox.
 Le positionnement des marqueurs sur la map ainsi que la gestion de la barre de recherche se fait à l’aide de l’api geocoder de Mapbox.
 Pour s’assurer d’avoir ajouté les bonnes adresses ont passe par l’api du gouvernement.
 ### Back-End
-framework PHP Symfony ;
-interface avec la base de données : ORM Doctrine de Symfony ;
-Base de données : MySql ;
-Gestion de la base de données : PhpMyAdmin.
+* framework PHP Symfony ;
+* interface avec la base de données : ORM Doctrine de Symfony ;
+* Base de données : MySql ;
+* Gestion de la base de données : PhpMyAdmin.
